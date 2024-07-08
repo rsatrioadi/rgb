@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const hueBarDiv = document.getElementById('hue-bar');
     const satBrightDiv = document.getElementById('sat-bright-dist');
 
-    const url = 'https://xkcd.com/color/rgb.txt';
+    const url = './data/rgb.txt';
 
     // Fetch color data and update graphs
     function fetchDataAndRender() {
