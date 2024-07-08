@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	const url = './data/rgb.txt';
 
-	// Fetch color data and update graphs
+	/**
+	 * Fetches color data from the specified URL, parses it, and renders graphs.
+	 */
 	async function fetchDataAndRender() {
 		try {
 			const response = await fetch(url);
@@ -21,7 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 
-	// Parse color data from text format to array of objects
+	/**
+	 * Parses color data from text format to an array of objects.
+	 * @param {string} data - The raw text data containing color information.
+	 * @returns {Array} An array of objects representing color data.
+	 */
 	function parseColorData(data) {
 		const lines = data.split('\n');
 		const colors = {};
@@ -50,7 +56,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		return colorData;
 	}
 
-	// Convert hex color code to RGB object
+	/**
+	 * Converts a hex color code to an RGB object.
+	 * @param {string} hex - The hexadecimal color code.
+	 * @returns {Object} An object with 'r', 'g', 'b' properties representing RGB values.
+	 */
 	function hexToRgb(hex) {
 		const hexCode = hex.replace('#', '');
 		return {
@@ -60,7 +70,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		};
 	}
 
-	// Convert RGB values to HSV object
+	/**
+	 * Converts RGB values to HSV (Hue, Saturation, Brightness) object.
+	 * @param {number} r - The red component (0-255).
+	 * @param {number} g - The green component (0-255).
+	 * @param {number} b - The blue component (0-255).
+	 * @returns {Object} An object with 'h', 's', 'v' properties representing HSV values.
+	 */
 	function rgbToHsv(r, g, b) {
 		const rNorm = r / 255.0, gNorm = g / 255.0, bNorm = b / 255.0;
 		const max = Math.max(rNorm, gNorm, bNorm), min = Math.min(rNorm, gNorm, bNorm);
@@ -83,13 +99,19 @@ document.addEventListener('DOMContentLoaded', function () {
 		return { h, s, v };
 	}
 
-	// Render graphs using Plotly.js
+	/**
+	 * Renders both the hue bar chart and the saturation-brightness scatter plot.
+	 * @param {Array} colorData - An array of objects containing color data.
+	 */
 	function renderGraphs(colorData) {
 		renderHueBar(colorData);
 		renderSatBrightDist(colorData);
 	}
 
-	// Render Hue Bar chart using Plotly.js
+	/**
+	 * Renders the hue bar chart using Plotly.js.
+	 * @param {Array} colorData - An array of objects containing color data.
+	 */
 	function renderHueBar(colorData) {
 		const hueValues = Array.from({ length: 360 }, (_, i) => i); // Array of hue values from 0 to 359
 		const hueCounts = Array.from({ length: 360 }, () => 0);
@@ -121,7 +143,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		Plotly.newPlot(hueBarDiv, hueBarData, hueBarLayout);
 	}
 
-	// Render Saturation-Brightness scatter plot using Plotly.js
+	/**
+	 * Renders the saturation-brightness scatter plot using Plotly.js.
+	 * @param {Array} colorData - An array of objects containing color data.
+	 */
 	function renderSatBrightDist(colorData) {
 		const satBrightData = [{
 			x: colorData.map(color => color.saturation),
@@ -151,8 +176,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		Plotly.newPlot(satBrightDiv, satBrightData, satBrightLayout);
 	}
 
-
-	// Setup filter input event listener
+	/**
+	 * Sets up event listener for filter input to dynamically filter color data.
+	 * @param {Array} colorData - An array of objects containing color data.
+	 */
 	function setupFilterListener(colorData) {
 		filterInput.addEventListener('input', function () {
 			const filterTerm = filterInput.value.trim();
